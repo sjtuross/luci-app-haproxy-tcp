@@ -16,7 +16,7 @@ stop(){
 }
 start(){
 	echo "starting haproxy"
-	logger -t alex restarting haproxy
+	logger -t restarting haproxy
 	local balance=`uci get haproxy.@arguments[0].balance 2>/dev/null`
 	[ -z $balance ] && balance=roundrobin
 	cat > $CFG_FILE <<EOF
@@ -50,7 +50,7 @@ listen admin_stats
   stats refresh 30s               #节点统计页面自动刷新时间
   stats uri /haproxy              #节点统计页面url
   stats realm Haproxy             #统计页面密码框上提示文本
-  stats auth admin:root           #设置监控页面的用户和密码:admin,可以设置多个用户名
+  #stats auth admin:root           #设置监控页面的用户和密码:admin,可以设置多个用户名
   stats  admin if TRUE            #设置手工启动/禁用，后端服务器(haproxy-1.4.9以后版本)
 frontend ss-in
 	bind 127.0.0.1:2222
@@ -114,7 +114,7 @@ restart(){
 	echo luci for haproxy
 	sleep 1s
 	local vt_enabled=`uci get haproxy.@arguments[0].enabled 2>/dev/null`
-	logger -t alex !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!haproxy is initializing enabled is $vt_enabled
+	logger -t haproxy is initializing enabled is $vt_enabled
 	echo $vt_enabled 
 	if [ "$vt_enabled" = 1 ]; then
 		[ -f /etc/haproxy_backup ] && {
